@@ -4,7 +4,7 @@ import scipy.optimize as sopt
 from scipy.special import expit as sigmoid
 
 
-def notears_linear(X, lambda1, loss_type, max_iter=100, h_tol=1e-8, rho_max=1e+16, w_threshold=0.3):
+def notears_linear(X, lambda1, loss_type, max_iter=100, h_tol=1e-8, rho_max=1e+16, w_threshold=0.1):
     """Solve min_W L(W; X) + lambda1 ‖W‖_1 s.t. h(W) = 0 using augmented Lagrangian.
 
     Args:
@@ -87,20 +87,80 @@ def notears_linear(X, lambda1, loss_type, max_iter=100, h_tol=1e-8, rho_max=1e+1
 
 
 if __name__ == '__main__':
-    from notears import utils
-    utils.set_random_seed(1)
+    import utils
+    import pandas as pd
+    import os
 
     n, d, s0, graph_type, sem_type = 100, 20, 20, 'ER', 'gauss'
-    B_true = utils.simulate_dag(d, s0, graph_type)
-    W_true = utils.simulate_parameter(B_true)
-    np.savetxt('W_true.csv', W_true, delimiter=',')
+    w_threshold = 0.1
+    bootstrap_samples = 20 
+    # Create folder for detailed results
+    detail_folder = 'detailed_results'
+    os.makedirs(detail_folder, exist_ok=True)
 
-    X = utils.simulate_linear_sem(W_true, n, sem_type)
-    np.savetxt('X.csv', X, delimiter=',')
+    # Lists to store results
+    results_no_bootstrap = []
+    results_with_bootstrap = []
+    
+    for seed in range(30):
+        print(f"Running seed {seed}")
+        utils.set_random_seed(seed)
 
-    W_est = notears_linear(X, lambda1=0.1, loss_type='l2')
-    assert utils.is_dag(W_est)
-    np.savetxt('W_est.csv', W_est, delimiter=',')
-    acc = utils.count_accuracy(B_true, W_est != 0)
-    print(acc)
+        # Generate data (seed-dependent)
+        B_true = utils.simulate_dag(d, s0, graph_type)
+        W_true = utils.simulate_parameter(B_true)
+        X = utils.simulate_linear_sem(W_true, n, sem_type)
 
+        # Save data for this seed
+        np.savetxt(f'{detail_folder}/W_true_seed_{seed}.csv', W_true, delimiter=',')
+        np.savetxt(f'{detail_folder}/X_seed_{seed}.csv', X, delimiter=',')
+
+        # Method 1: Direct estimation (no bootstrapping)
+        W_est = notears_linear(X, lambda1=0.1, loss_type='l2')
+        #assert utils.is_dag(W_est)
+        np.savetxt(f'{detail_folder}/W_est_seed_{seed}.csv', W_est, delimiter=',')
+        acc_no_bootstrap = utils.count_accuracy(B_true, W_est != 0)
+        
+        # Store results with seed
+        result_no_bootstrap = {'seed': seed}
+        result_no_bootstrap.update(acc_no_bootstrap)
+        results_no_bootstrap.append(result_no_bootstrap)
+
+        # Method 2: Bootstrap estimation
+        W_est_bootstrapped = []
+        for _ in range(50):
+            indices = np.random.choice(n, size=n, replace=True)
+            subsample = X[indices]
+            W_est_bootstrapped.append(notears_linear(subsample, lambda1=0.1, loss_type="l2"))
+        
+        # Stack and average
+        W_stack = np.stack(W_est_bootstrapped)
+        W_mean = np.mean(W_stack, axis=0)
+        W_mean[np.abs(W_mean) < w_threshold] = 0
+
+        # Evaluate bootstrapped model
+        acc_with_bootstrap = utils.count_accuracy(B_true, W_mean != 0)
+        
+        # Store results with seed
+        result_with_bootstrap = {'seed': seed, 'bootstrap_samples': bootstrap_samples}
+        result_with_bootstrap.update(acc_with_bootstrap)
+        results_with_bootstrap.append(result_with_bootstrap)
+        
+        print(f"Seed {seed} - No bootstrap: {acc_no_bootstrap}")
+        print(f"Seed {seed} - With bootstrap: {acc_with_bootstrap}")
+
+    # Convert to DataFrames and save to CSV
+    df_no_bootstrap = pd.DataFrame(results_no_bootstrap)
+    df_with_bootstrap = pd.DataFrame(results_with_bootstrap)
+    
+    df_no_bootstrap.to_csv('accuracies_no_bootstrap.csv', index=False)
+    df_with_bootstrap.to_csv('accuracies_with_bootstrap.csv', index=False)
+    
+    print("Results saved to 'accuracies_no_bootstrap.csv' and 'accuracies_with_bootstrap.csv'")
+    print(f"Detailed data saved in '{detail_folder}/' folder")
+
+    # Print summary statistics
+    print("\nSummary - No Bootstrap:")
+    print(df_no_bootstrap.describe())
+    print("\nSummary - With Bootstrap:")
+    print(df_with_bootstrap.describe())
