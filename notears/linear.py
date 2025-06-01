@@ -90,77 +90,163 @@ if __name__ == '__main__':
     import utils
     import pandas as pd
     import os
+    import matplotlib.pyplot as plt
+    import seaborn as sns
 
     n, d, s0, graph_type, sem_type = 100, 20, 20, 'ER', 'gauss'
     w_threshold = 0.1
-    bootstrap_samples = 20 
-    # Create folder for detailed results
+    bootstrap_samples = 20
+    
+    # Create folders for results
     detail_folder = 'detailed_results'
     os.makedirs(detail_folder, exist_ok=True)
-
-    # Lists to store results
-    results_no_bootstrap = []
-    results_with_bootstrap = []
     
-    for seed in range(30):
-        print(f"Running seed {seed}")
-        utils.set_random_seed(seed)
-
-        # Generate data (seed-dependent)
-        B_true = utils.simulate_dag(d, s0, graph_type)
-        W_true = utils.simulate_parameter(B_true)
-        X = utils.simulate_linear_sem(W_true, n, sem_type)
-
-        # Save data for this seed
-        np.savetxt(f'{detail_folder}/W_true_seed_{seed}.csv', W_true, delimiter=',')
-        np.savetxt(f'{detail_folder}/X_seed_{seed}.csv', X, delimiter=',')
-
-        # Method 1: Direct estimation (no bootstrapping)
-        W_est = notears_linear(X, lambda1=0.1, loss_type='l2')
-        #assert utils.is_dag(W_est)
-        np.savetxt(f'{detail_folder}/W_est_seed_{seed}.csv', W_est, delimiter=',')
-        acc_no_bootstrap = utils.count_accuracy(B_true, W_est != 0)
-        
-        # Store results with seed
-        result_no_bootstrap = {'seed': seed}
-        result_no_bootstrap.update(acc_no_bootstrap)
-        results_no_bootstrap.append(result_no_bootstrap)
-
-        # Method 2: Bootstrap estimation
-        W_est_bootstrapped = []
-        for _ in range(50):
-            indices = np.random.choice(n, size=n, replace=True)
-            subsample = X[indices]
-            W_est_bootstrapped.append(notears_linear(subsample, lambda1=0.1, loss_type="l2"))
-        
-        # Stack and average
-        W_stack = np.stack(W_est_bootstrapped)
-        W_mean = np.mean(W_stack, axis=0)
-        W_mean[np.abs(W_mean) < w_threshold] = 0
-
-        # Evaluate bootstrapped model
-        acc_with_bootstrap = utils.count_accuracy(B_true, W_mean != 0)
-        
-        # Store results with seed
-        result_with_bootstrap = {'seed': seed, 'bootstrap_samples': bootstrap_samples}
-        result_with_bootstrap.update(acc_with_bootstrap)
-        results_with_bootstrap.append(result_with_bootstrap)
-        
-        print(f"Seed {seed} - No bootstrap: {acc_no_bootstrap}")
-        print(f"Seed {seed} - With bootstrap: {acc_with_bootstrap}")
-
-    # Convert to DataFrames and save to CSV
-    df_no_bootstrap = pd.DataFrame(results_no_bootstrap)
-    df_with_bootstrap = pd.DataFrame(results_with_bootstrap)
+    # Lists to store results for each weight range
+    all_range_results_no_bootstrap = []
+    all_range_results_with_bootstrap = []
     
-    df_no_bootstrap.to_csv('accuracies_no_bootstrap.csv', index=False)
-    df_with_bootstrap.to_csv('accuracies_with_bootstrap.csv', index=False)
+    # Metrics to track
+    metrics = ['fdr', 'tpr', 'fpr', 'shd', 'nnz']
     
-    print("Results saved to 'accuracies_no_bootstrap.csv' and 'accuracies_with_bootstrap.csv'")
-    print(f"Detailed data saved in '{detail_folder}/' folder")
+    # Loop over 10 different weight ranges
+    for range_idx in range(10):
+        # Adjust weight ranges based on iteration
+        w_range_1 = (-0.1 - 0.1 * range_idx, -1.0 - 0.1 * range_idx)  # e.g., (-0.1, -1), (-0.2, -1.1), etc.
+        w_range_2 = (0.1 +  0.1 * range_idx, 1.0 + 0.1 * range_idx)  # e.g., (0.1, 1), (0.1, 1.1), etc.
+        
+        print(f"\n===== Weight Range {range_idx+1} =====")
+        print(f"w_range_1: {w_range_1}, w_range_2: {w_range_2}")
+        
+        # Lists to store results for this weight range
+        results_no_bootstrap = []
+        results_with_bootstrap = []
+        
+        # Run experiment for each seed
+        for seed in range(30):
+            print(f"Running seed {seed}")
+            utils.set_random_seed(seed)
+            
+            # Generate data (seed-dependent)
+            B_true = utils.simulate_dag(d, s0, graph_type)
+            W_true = utils.simulate_parameter(B_true, (w_range_1, w_range_2))
+            X = utils.simulate_linear_sem(W_true, n, sem_type)
+            
+            # Save data for this seed and range
+            range_detail_folder = f'{detail_folder}/range_{range_idx+1}'
+            os.makedirs(range_detail_folder, exist_ok=True)
+            np.savetxt(f'{range_detail_folder}/W_true_seed_{seed}.csv', W_true, delimiter=',')
+            np.savetxt(f'{range_detail_folder}/X_seed_{seed}.csv', X, delimiter=',')
+            
+            # Method 1: Direct estimation (no bootstrapping)
+            W_est = notears_linear(X, lambda1=0.1, loss_type='l2')
+            np.savetxt(f'{range_detail_folder}/W_est_no_bootstraped_seed_{seed}.csv', W_est, delimiter=',')
+            acc_no_bootstrap = utils.count_accuracy(B_true, W_est != 0)
+            
+            # Store results with seed and range info
+            result_no_bootstrap = {'seed': seed, 'range_idx': range_idx}
+            result_no_bootstrap.update(acc_no_bootstrap)
+            results_no_bootstrap.append(result_no_bootstrap)
+            
+            # Method 2: Bootstrap estimation
+            W_est_bootstrapped = []
+            for _ in range(50):
+                indices = np.random.choice(n, size=n, replace=True)
+                subsample = X[indices]
+                W_est_bootstrapped.append(notears_linear(subsample, lambda1=0.1, loss_type="l2"))
+            
+            # Stack and average
+            W_stack = np.stack(W_est_bootstrapped)
+            W_mean = np.mean(W_stack, axis=0)
+            W_mean[np.abs(W_mean) < w_threshold] = 0
+            
+            # Evaluate bootstrapped model
+            acc_with_bootstrap = utils.count_accuracy(B_true, W_mean != 0)
+            
+            # Store results with seed and range info
+            result_with_bootstrap = {'seed': seed, 'range_idx': range_idx, 'n_bootstrap_samples': bootstrap_samples}
+            result_with_bootstrap.update(acc_with_bootstrap)
+            results_with_bootstrap.append(result_with_bootstrap)
+            
+            print(f"Seed {seed} - No bootstrap: {acc_no_bootstrap}")
+            print(f"Seed {seed} - With bootstrap: {acc_with_bootstrap}")
+        
+        # Convert to DataFrames for this range
+        df_no_bootstrap = pd.DataFrame(results_no_bootstrap)
+        df_with_bootstrap = pd.DataFrame(results_with_bootstrap)
+        
+        # Save detailed results for this range
+        df_no_bootstrap.to_csv(f'accuracies_no_bootstrap_range_{range_idx+1}.csv', index=False)
+        df_with_bootstrap.to_csv(f'accuracies_with_bootstrap_range_{range_idx+1}.csv', index=False)
+        
+        # Calculate summary statistics for this range
+        range_summary_no_bootstrap = df_no_bootstrap.describe().loc['mean', metrics].to_dict()
+        range_summary_with_bootstrap = df_with_bootstrap.describe().loc['mean', metrics].to_dict()
+        
+        # Add range info to both summaries
+        range_metadata = {
+            'range_idx': range_idx,
+            'w_range_1_low': w_range_1[0],
+            'w_range_1_high': w_range_1[1],
+            'w_range_2_low': w_range_2[0],
+            'w_range_2_high': w_range_2[1]
+        }
 
-    # Print summary statistics
-    print("\nSummary - No Bootstrap:")
-    print(df_no_bootstrap.describe())
-    print("\nSummary - With Bootstrap:")
-    print(df_with_bootstrap.describe())
+        range_summary_no_bootstrap.update(range_metadata)
+        range_summary_no_bootstrap['bootstrap'] = False
+
+        range_summary_with_bootstrap.update(range_metadata)
+        range_summary_with_bootstrap['bootstrap'] = True
+        
+        # Store range summaries
+        all_range_results_no_bootstrap.append(range_summary_no_bootstrap)
+        all_range_results_with_bootstrap.append(range_summary_with_bootstrap)
+        
+        print(f"Range {range_idx+1} complete - results saved")
+    
+    # Convert range summaries to DataFrames
+    df_all_no_bootstrap = pd.DataFrame(all_range_results_no_bootstrap)
+    df_all_with_bootstrap = pd.DataFrame(all_range_results_with_bootstrap)
+    
+    # Save summary results
+    df_all_no_bootstrap.to_csv('summary_no_bootstrap.csv', index=False)
+    df_all_with_bootstrap.to_csv('summary_with_bootstrap.csv', index=False)
+    
+    # Combine summaries for plotting
+    df_combined = pd.concat([df_all_no_bootstrap, df_all_with_bootstrap])
+    
+    # Create plots comparing bootstrap vs. no bootstrap for each metric
+    plt.figure(figsize=(15, 10))
+    
+    for i, metric in enumerate(metrics):
+        plt.subplot(2, 3, i+1)
+        
+        # Create x-axis labels based on range_idx
+        x_labels = [f"{idx+1}\n({-0.1-0.1*idx:.1f},{1.0+0.1*idx:.1f})" for idx in range(10)]
+        
+        # Plot data
+        sns.lineplot(
+            data=df_combined, 
+            x='range_idx', 
+            y=metric, 
+            hue='bootstrap',
+            marker='o',
+            style='bootstrap',
+            dashes=False
+        )
+        
+        plt.title(f"{metric.upper()} by Weight Range")
+        plt.xlabel("Weight Range Index\n(w1_low, w2_high)")
+        plt.ylabel(metric.upper())
+        plt.grid(True, alpha=0.3)
+        plt.xticks(range(10), x_labels, rotation=45)
+        plt.legend(title='Bootstrap', labels=['No', 'Yes'])
+    
+    plt.tight_layout()
+    plt.savefig('accuracy_metrics_comparison.png', dpi=300)
+    plt.savefig('accuracy_metrics_comparison.pdf')
+    
+    # Print final summary
+    print("\nExperiment complete!")
+    print("Summary files saved as 'summary_no_bootstrap.csv' and 'summary_with_bootstrap.csv'")
+    print("Detailed results saved by weight range")
+    print("Plots saved as 'accuracy_metrics_comparison.png' and 'accuracy_metrics_comparison.pdf'")
