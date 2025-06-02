@@ -13,7 +13,7 @@
 module load Python/3.9
 
 # Venv aktivieren (vorausgesetzt es existiert bereits)
-source venv_notears/bin/activate
+source /home/sc.uni-leipzig.de/og98ohex/notears/notears/venv_notears/bin/activate  # Absolute path!
 
 # Test ob Pakete verfügbar sind
 python -c "import numpy, scipy, pandas; print('Packages OK')"
