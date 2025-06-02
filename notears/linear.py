@@ -92,10 +92,16 @@ if __name__ == '__main__':
     import os
     import matplotlib.pyplot as plt
     import seaborn as sns
+    import time
+    from datetime import timedelta
 
     n, d, s0, graph_type, sem_type = 100, 20, 20, 'ER', 'gauss'
     w_threshold = 0.1
     bootstrap_samples = 20
+    n_seeds = 10
+    
+    # For tracking total execution time
+    start_time_total = time.time()
     
     # Create folders for results
     detail_folder = 'detailed_results'
@@ -107,9 +113,11 @@ if __name__ == '__main__':
     
     # Metrics to track
     metrics = ['fdr', 'tpr', 'fpr', 'shd', 'nnz']
-    
-    # Loop over 10 different weight ranges
+      # Loop over 10 different weight ranges
     for range_idx in range(10):
+        # Start timing for this weight range
+        start_time_range = time.time()
+        
         # Adjust weight ranges based on iteration
         w_range_1 = (-0.1 - 0.1 * range_idx, -1.0 - 0.1 * range_idx)  # e.g., (-0.1, -1), (-0.2, -1.1), etc.
         w_range_2 = (0.1 +  0.1 * range_idx, 1.0 + 0.1 * range_idx)  # e.g., (0.1, 1), (0.1, 1.1), etc.
@@ -122,7 +130,7 @@ if __name__ == '__main__':
         results_with_bootstrap = []
         
         # Run experiment for each seed
-        for seed in range(30):
+        for seed in range(n_seeds):
             print(f"Running seed {seed}")
             utils.set_random_seed(seed)
             
@@ -149,7 +157,7 @@ if __name__ == '__main__':
             
             # Method 2: Bootstrap estimation
             W_est_bootstrapped = []
-            for _ in range(50):
+            for _ in range(bootstrap_samples):
                 indices = np.random.choice(n, size=n, replace=True)
                 subsample = X[indices]
                 W_est_bootstrapped.append(notears_linear(subsample, lambda1=0.1, loss_type="l2"))
@@ -175,8 +183,8 @@ if __name__ == '__main__':
         df_with_bootstrap = pd.DataFrame(results_with_bootstrap)
         
         # Save detailed results for this range
-        df_no_bootstrap.to_csv(f'accuracies_no_bootstrap_range_{range_idx+1}.csv', index=False)
-        df_with_bootstrap.to_csv(f'accuracies_with_bootstrap_range_{range_idx+1}.csv', index=False)
+        df_no_bootstrap.to_csv(f'{detail_folder}/accuracies/accuracies_no_bootstrap_range_{range_idx+1}.csv', index=False)
+        df_with_bootstrap.to_csv(f'{detail_folder}/accuracies/accuracies_with_bootstrap_range_{range_idx+1}.csv', index=False)
         
         # Calculate summary statistics for this range
         range_summary_no_bootstrap = df_no_bootstrap.describe().loc['mean', metrics].to_dict()
@@ -196,12 +204,14 @@ if __name__ == '__main__':
 
         range_summary_with_bootstrap.update(range_metadata)
         range_summary_with_bootstrap['bootstrap'] = True
-        
-        # Store range summaries
+          # Store range summaries
         all_range_results_no_bootstrap.append(range_summary_no_bootstrap)
         all_range_results_with_bootstrap.append(range_summary_with_bootstrap)
         
-        print(f"Range {range_idx+1} complete - results saved")
+        # Calculate and print the time taken for this weight range
+        range_time = time.time() - start_time_range
+        range_time_str = str(timedelta(seconds=int(range_time)))
+        print(f"Range {range_idx+1} complete - results saved (Time taken: {range_time_str})")
     
     # Convert range summaries to DataFrames
     df_all_no_bootstrap = pd.DataFrame(all_range_results_no_bootstrap)
@@ -210,18 +220,15 @@ if __name__ == '__main__':
     # Save summary results
     df_all_no_bootstrap.to_csv('summary_no_bootstrap.csv', index=False)
     df_all_with_bootstrap.to_csv('summary_with_bootstrap.csv', index=False)
-    
-    # Combine summaries for plotting
+      # Combine summaries for plotting
     df_combined = pd.concat([df_all_no_bootstrap, df_all_with_bootstrap])
     
-    # Create plots comparing bootstrap vs. no bootstrap for each metric
-    plt.figure(figsize=(15, 10))
+    # Create x-axis labels based on the actual weight ranges
+    x_labels = [f"{idx+1}\n({-0.1-0.1*idx:.1f},{-1.0-0.1*idx:.1f})|({0.1+0.1*idx:.1f},{1.0+0.1*idx:.1f})" for idx in range(10)]
     
-    for i, metric in enumerate(metrics):
-        plt.subplot(2, 3, i+1)
-        
-        # Create x-axis labels based on range_idx
-        x_labels = [f"{idx+1}\n({-0.1-0.1*idx:.1f},{1.0+0.1*idx:.1f})" for idx in range(10)]
+    # Create individual plots for each metric
+    for metric in metrics:
+        plt.figure(figsize=(8, 6))
         
         # Plot data
         sns.lineplot(
@@ -235,18 +242,50 @@ if __name__ == '__main__':
         )
         
         plt.title(f"{metric.upper()} by Weight Range")
-        plt.xlabel("Weight Range Index\n(w1_low, w2_high)")
+        plt.xlabel("Weight Range Index")
         plt.ylabel(metric.upper())
         plt.grid(True, alpha=0.3)
         plt.xticks(range(10), x_labels, rotation=45)
+        plt.legend(title='Bootstrap', labels=['No', 'Yes'])
+        plt.tight_layout()
+        
+        # Save individual plot
+        plt.savefig(f'accuracy_metrics_{metric}.png', dpi=300)
+        plt.savefig(f'accuracy_metrics_{metric}.pdf')
+        plt.close()
+    
+    # Create a combined plot as well
+    plt.figure(figsize=(15, 10))
+    for i, metric in enumerate(metrics):
+        plt.subplot(2, 3, i+1)
+        
+        sns.lineplot(
+            data=df_combined, 
+            x='range_idx', 
+            y=metric, 
+            hue='bootstrap',
+            marker='o',
+            style='bootstrap',
+            dashes=False
+        )
+        
+        plt.title(f"{metric.upper()} by Weight Range")
+        plt.xlabel("Weight Range Index")
+        plt.ylabel(metric.upper())
+        plt.grid(True, alpha=0.3)
+        plt.xticks(range(10), [str(i+1) for i in range(10)])
         plt.legend(title='Bootstrap', labels=['No', 'Yes'])
     
     plt.tight_layout()
     plt.savefig('accuracy_metrics_comparison.png', dpi=300)
     plt.savefig('accuracy_metrics_comparison.pdf')
+      # Calculate total time
+    total_time = time.time() - start_time_total
+    total_time_str = str(timedelta(seconds=int(total_time)))
     
     # Print final summary
     print("\nExperiment complete!")
+    print(f"Total execution time: {total_time_str}")    
     print("Summary files saved as 'summary_no_bootstrap.csv' and 'summary_with_bootstrap.csv'")
     print("Detailed results saved by weight range")
-    print("Plots saved as 'accuracy_metrics_comparison.png' and 'accuracy_metrics_comparison.pdf'")
+    print("Plots saved as individual metric files ('accuracy_metrics_*.png/pdf') and combined ('accuracy_metrics_comparison.png/pdf')")
