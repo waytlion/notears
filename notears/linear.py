@@ -216,70 +216,11 @@ if __name__ == '__main__':
     # Convert range summaries to DataFrames
     df_all_no_bootstrap = pd.DataFrame(all_range_results_no_bootstrap)
     df_all_with_bootstrap = pd.DataFrame(all_range_results_with_bootstrap)
-    
-    # Save summary results
+      # Save summary results
     df_all_no_bootstrap.to_csv('summary_no_bootstrap.csv', index=False)
     df_all_with_bootstrap.to_csv('summary_with_bootstrap.csv', index=False)
-      # Combine summaries for plotting
-    df_combined = pd.concat([df_all_no_bootstrap, df_all_with_bootstrap])
     
-    # Create x-axis labels based on the actual weight ranges
-    x_labels = [f"{idx+1}\n({-0.1-0.1*idx:.1f},{-1.0-0.1*idx:.1f})|({0.1+0.1*idx:.1f},{1.0+0.1*idx:.1f})" for idx in range(10)]
-    
-    # Create individual plots for each metric
-    for metric in metrics:
-        plt.figure(figsize=(8, 6))
-        
-        # Plot data
-        sns.lineplot(
-            data=df_combined, 
-            x='range_idx', 
-            y=metric, 
-            hue='bootstrap',
-            marker='o',
-            style='bootstrap',
-            dashes=False
-        )
-        
-        plt.title(f"{metric.upper()} by Weight Range")
-        plt.xlabel("Weight Range Index")
-        plt.ylabel(metric.upper())
-        plt.grid(True, alpha=0.3)
-        plt.xticks(range(10), x_labels, rotation=45)
-        plt.legend(title='Bootstrap', labels=['No', 'Yes'])
-        plt.tight_layout()
-        
-        # Save individual plot
-        plt.savefig(f'accuracy_metrics_{metric}.png', dpi=300)
-        plt.savefig(f'accuracy_metrics_{metric}.pdf')
-        plt.close()
-    
-    # Create a combined plot as well
-    plt.figure(figsize=(15, 10))
-    for i, metric in enumerate(metrics):
-        plt.subplot(2, 3, i+1)
-        
-        sns.lineplot(
-            data=df_combined, 
-            x='range_idx', 
-            y=metric, 
-            hue='bootstrap',
-            marker='o',
-            style='bootstrap',
-            dashes=False
-        )
-        
-        plt.title(f"{metric.upper()} by Weight Range")
-        plt.xlabel("Weight Range Index")
-        plt.ylabel(metric.upper())
-        plt.grid(True, alpha=0.3)
-        plt.xticks(range(10), [str(i+1) for i in range(10)])
-        plt.legend(title='Bootstrap', labels=['No', 'Yes'])
-    
-    plt.tight_layout()
-    plt.savefig('accuracy_metrics_comparison.png', dpi=300)
-    plt.savefig('accuracy_metrics_comparison.pdf')
-      # Calculate total time
+    # Calculate total time
     total_time = time.time() - start_time_total
     total_time_str = str(timedelta(seconds=int(total_time)))
     
@@ -288,4 +229,4 @@ if __name__ == '__main__':
     print(f"Total execution time: {total_time_str}")    
     print("Summary files saved as 'summary_no_bootstrap.csv' and 'summary_with_bootstrap.csv'")
     print("Detailed results saved by weight range")
-    print("Plots saved as individual metric files ('accuracy_metrics_*.png/pdf') and combined ('accuracy_metrics_comparison.png/pdf')")
+    print("\nTo create visualizations, run: python visualize_results.py")

@@ -24,4 +24,13 @@ cd $SLURM_SUBMIT_DIR
 # Python Script ausführen
 python notears/linear.py
 
+# Generate visualizations if experiment completed successfully
+if [ $? -eq 0 ]; then
+    echo "Experiment completed successfully. Generating visualizations..."
+    python visualize_results.py
+    echo "Visualizations completed at $(date)"
+else
+    echo "Experiment failed. Skipping visualization."
+fi
+
 echo "Job completed at $(date)"
