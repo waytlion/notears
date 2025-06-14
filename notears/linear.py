@@ -138,7 +138,8 @@ if __name__ == '__main__':
             B_true = utils.simulate_dag(d, s0, graph_type)
             W_true = utils.simulate_parameter(B_true, (w_range_1, w_range_2))
             X = utils.simulate_linear_sem(W_true, n, sem_type)
-            
+            print(X)
+            raise KeyError
             # Save data for this seed and range
             range_detail_folder = f'{detail_folder}/range_{range_idx+1}'
             os.makedirs(range_detail_folder, exist_ok=True)
