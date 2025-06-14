@@ -142,28 +142,63 @@ def load_cyto_data():
 if __name__ == '__main__':
     start_time_total  = time.time()
     
+    bootstrap_samples = 50
+    w_threshold = 0.1
+
+
     ### Load the datasets
     X, B_true = load_cyto_data()
-    
+    print(X.shape)
+    n_rows = int(X.shape[0])
+    selected_rows = np.random.choice(X.shape[0], n_rows, replace=False)
+    X = X[selected_rows, :]    
+    print(X.shape)
     print(f"\nDatasets loaded successfully!")
     print(f"X (features): {X.shape}")
     print(f"Adjacency matrix: {B_true.shape}")
 
     ### Estimate dag (logistic error)
-    W_est = notears_linear(X, lambda1=0.1, loss_type='logistic')
+    print("\nstarting Alg: NOTEARS")
+    W_est = notears_linear(X, lambda1=0.1, loss_type='l2')
+    print("\nFinished running Alg: NOTEARS")
     print(W_est)
     assert utils.is_dag(W_est)
     np.savetxt("./w_est.csv", W_est, delimiter=',')
 
-    ### Accuracies: compare stat with true (compare with weights set to 1 and without set to 1)
+    ### Accuracies: compare stat with true (compare with weights set to 1 and without set to 1)    # Calculate accuracies for continuous W_est
     acc_w_cont = utils.count_accuracy(B_true, W_est != 0)
-    W_est_binary = acc_w_cont[acc_w_cont != 0] = 1
-    acc_w_cont = utils.count_accuracy(B_true, W_est != 0)
+    
+    # Create binary version of W_est (set non-zero values to 1)
+    W_est_binary = W_est.copy()
+    W_est_binary[W_est_binary != 0] = 1
+    print(W_est_binary)
+    raise KeyError
+    
+    # Calculate accuracies for binary W_est
+    acc_w_binary = utils.count_accuracy(B_true, W_est_binary != 0)
 
-    print("Accuracies W_Est continous",acc_w_cont)
+    print("Accuracies W_Est continuous", acc_w_cont)
     np.savetxt("./acc_w_cont.csv", W_est, delimiter=',')
-    print("Accuracies W_est_binary",W_est_binary)
+    print("Accuracies W_est_binary", acc_w_binary)
     np.savetxt("./W_est_binary.csv", W_est_binary, delimiter=',')
+
+    
+    # Method 2: Bootstrap estimation
+    W_est_bootstrapped = []
+    for _ in range(bootstrap_samples):
+        indices = np.random.choice(X.shape[0], size=X.shape[0], replace=True)
+        subsample = X[indices]
+        W_est_bootstrapped.append(notears_linear(X, lambda1=0.1, loss_type="l2"))
+    
+    # Stack and average
+    W_stack = np.stack(W_est_bootstrapped)
+    W_mean = np.mean(W_stack, axis=0)
+    W_mean[np.abs(W_mean) < w_threshold] = 0
+    
+    # Evaluate bootstrapped model
+    acc_with_bootstrap = utils.count_accuracy(B_true, W_mean != 0)
+    print("Accuracies W_Est bootstrapped", acc_w_cont)
+    np.savetxt("./acc_w_est-bootstrapped.csv", W_est, delimiter=',')
 
     ### Total Time 
     total_time = time.time() - start_time_total

@@ -97,9 +97,9 @@ if __name__ == '__main__':
 
     n, d, s0, graph_type, sem_type = 100, 20, 20, 'ER', 'gauss'
     w_threshold = 0.1
-    bootstrap_samples = 20
-    n_seeds = 10
-    
+    bootstrap_samples = 0
+    n_seeds = 1
+    n_W_Intervals=1
     # For tracking total execution time
     start_time_total = time.time()
     
@@ -113,8 +113,8 @@ if __name__ == '__main__':
     
     # Metrics to track
     metrics = ['fdr', 'tpr', 'fpr', 'shd', 'nnz']
-      # Loop over 10 different weight ranges
-    for range_idx in range(10):
+    # Loop over 10 different weight ranges
+    for range_idx in range(n_W_Intervals):
         # Start timing for this weight range
         start_time_range = time.time()
         
@@ -138,8 +138,7 @@ if __name__ == '__main__':
             B_true = utils.simulate_dag(d, s0, graph_type)
             W_true = utils.simulate_parameter(B_true, (w_range_1, w_range_2))
             X = utils.simulate_linear_sem(W_true, n, sem_type)
-            print(X)
-            raise KeyError
+
             # Save data for this seed and range
             range_detail_folder = f'{detail_folder}/range_{range_idx+1}'
             os.makedirs(range_detail_folder, exist_ok=True)
