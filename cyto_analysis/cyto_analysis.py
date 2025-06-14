@@ -172,7 +172,6 @@ if __name__ == '__main__':
     W_est_binary = W_est.copy()
     W_est_binary[W_est_binary != 0] = 1
     print(W_est_binary)
-    raise KeyError
     
     # Calculate accuracies for binary W_est
     acc_w_binary = utils.count_accuracy(B_true, W_est_binary != 0)
@@ -197,8 +196,8 @@ if __name__ == '__main__':
     
     # Evaluate bootstrapped model
     acc_with_bootstrap = utils.count_accuracy(B_true, W_mean != 0)
-    print("Accuracies W_Est bootstrapped", acc_w_cont)
-    np.savetxt("./acc_w_est-bootstrapped.csv", W_est, delimiter=',')
+    print("Accuracies W_Est bootstrapped", acc_with_bootstrap)
+    np.savetxt("./acc_w_est-bootstrapped.csv", acc_with_bootstrap, delimiter=',')
 
     ### Total Time 
     total_time = time.time() - start_time_total
