@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/sc.uni-leipzig.de/og98ohex/notears/notears/cyto_analysis/cyto_analysis.py", line 200, in <module>
+    np.savetxt("./acc_w_est-bootstrapped.csv", acc_with_bootstrap, delimiter=',')
+  File "/home/sc.uni-leipzig.de/og98ohex/notears/notears/venv_notears/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 1577, in savetxt
+    raise ValueError(
+ValueError: Expected 1D or 2D array, got 0D array instead

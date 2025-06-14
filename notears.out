@@ -1,348 +1,67 @@
 Packages OK
+Looking for data file at: /home/sc.uni-leipzig.de/og98ohex/notears/notears/cyto_analysis/cyto_full_data.csv
+Looking for target file at: /home/sc.uni-leipzig.de/og98ohex/notears/notears/cyto_analysis/cyto_full_target.csv
+Data shape: (7466, 11)
+Data columns: ['praf', 'pmek', 'plcg', 'PIP2', 'PIP3', 'p44/42', 'pakts473', 'PKA', 'PKC', 'P38', 'pjnk']
+Target shape: (18, 2)
+Target columns: ['Cause', 'Effect']
 
-===== Weight Range 1 =====
-w_range_1: (-0.1, -1.0), w_range_2: (0.1, 1.0)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.25, 'tpr': 0.75, 'fpr': 0.029411764705882353, 'shd': 10, 'nnz': 20}
-Seed 0 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 0.75, 'fpr': 0.01764705882352941, 'shd': 8, 'nnz': 18}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.4827586206896552, 'tpr': 0.75, 'fpr': 0.08235294117647059, 'shd': 17, 'nnz': 29}
-Seed 1 - With bootstrap: {'fdr': 0.4074074074074074, 'tpr': 0.8, 'fpr': 0.06470588235294118, 'shd': 13, 'nnz': 27}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.38461538461538464, 'tpr': 0.8, 'fpr': 0.058823529411764705, 'shd': 13, 'nnz': 26}
-Seed 2 - With bootstrap: {'fdr': 0.3, 'tpr': 0.7, 'fpr': 0.03529411764705882, 'shd': 12, 'nnz': 20}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.3888888888888889, 'tpr': 0.55, 'fpr': 0.041176470588235294, 'shd': 15, 'nnz': 18}
-Seed 3 - With bootstrap: {'fdr': 0.15384615384615385, 'tpr': 0.55, 'fpr': 0.011764705882352941, 'shd': 11, 'nnz': 13}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.5, 'tpr': 0.7, 'fpr': 0.08235294117647059, 'shd': 17, 'nnz': 28}
-Seed 4 - With bootstrap: {'fdr': 0.4, 'tpr': 0.75, 'fpr': 0.058823529411764705, 'shd': 12, 'nnz': 25}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.39285714285714285, 'tpr': 0.85, 'fpr': 0.06470588235294118, 'shd': 14, 'nnz': 28}
-Seed 5 - With bootstrap: {'fdr': 0.1111111111111111, 'tpr': 0.8, 'fpr': 0.011764705882352941, 'shd': 6, 'nnz': 18}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.375, 'tpr': 0.75, 'fpr': 0.052941176470588235, 'shd': 13, 'nnz': 24}
-Seed 6 - With bootstrap: {'fdr': 0.2777777777777778, 'tpr': 0.65, 'fpr': 0.029411764705882353, 'shd': 12, 'nnz': 18}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.41935483870967744, 'tpr': 0.9, 'fpr': 0.07647058823529412, 'shd': 15, 'nnz': 31}
-Seed 7 - With bootstrap: {'fdr': 0.38461538461538464, 'tpr': 0.8, 'fpr': 0.058823529411764705, 'shd': 14, 'nnz': 26}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.2608695652173913, 'tpr': 0.85, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 23}
-Seed 8 - With bootstrap: {'fdr': 0.09523809523809523, 'tpr': 0.95, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 21}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.36363636363636365, 'tpr': 0.7, 'fpr': 0.047058823529411764, 'shd': 12, 'nnz': 22}
-Seed 9 - With bootstrap: {'fdr': 0.2631578947368421, 'tpr': 0.7, 'fpr': 0.029411764705882353, 'shd': 10, 'nnz': 19}
-Range 1 complete - results saved (Time taken: 0:09:53)
+Adjacency Matrix (DataFrame):
+          praf  pmek  plcg  PIP2  PIP3  p44/42  pakts473  PKA  PKC  P38  pjnk
+praf         0     1     0     0     0       0         0    0    0    0     0
+pmek         0     0     0     0     0       1         0    0    0    0     0
+plcg         0     0     0     1     0       0         0    0    1    0     0
+PIP2         0     0     0     0     1       0         0    0    1    0     0
+PIP3         0     0     1     0     0       0         1    0    0    0     0
+p44/42       0     0     0     0     0       0         0    0    0    0     0
+pakts473     0     0     0     0     0       0         0    0    0    0     0
+PKA          1     1     0     0     0       1         1    0    0    1     1
+PKC          1     1     0     0     0       0         0    0    0    1     1
+P38          0     0     0     0     0       0         0    0    0    0     0
+pjnk         0     0     0     0     0       0         0    0    0    0     0
+(7466, 11)
+(7466, 11)
 
-===== Weight Range 2 =====
-w_range_1: (-0.2, -1.1), w_range_2: (0.2, 1.1)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.21052631578947367, 'tpr': 0.75, 'fpr': 0.023529411764705882, 'shd': 9, 'nnz': 19}
-Seed 0 - With bootstrap: {'fdr': 0.11764705882352941, 'tpr': 0.75, 'fpr': 0.011764705882352941, 'shd': 7, 'nnz': 17}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.41379310344827586, 'tpr': 0.85, 'fpr': 0.07058823529411765, 'shd': 13, 'nnz': 29}
-Seed 1 - With bootstrap: {'fdr': 0.41935483870967744, 'tpr': 0.9, 'fpr': 0.07647058823529412, 'shd': 13, 'nnz': 31}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.43333333333333335, 'tpr': 0.85, 'fpr': 0.07647058823529412, 'shd': 14, 'nnz': 30}
-Seed 2 - With bootstrap: {'fdr': 0.2608695652173913, 'tpr': 0.85, 'fpr': 0.03529411764705882, 'shd': 8, 'nnz': 23}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.20833333333333334, 'tpr': 0.95, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 24}
-Seed 3 - With bootstrap: {'fdr': 0.0, 'tpr': 0.85, 'fpr': 0.0, 'shd': 3, 'nnz': 17}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.4482758620689655, 'tpr': 0.8, 'fpr': 0.07647058823529412, 'shd': 14, 'nnz': 29}
-Seed 4 - With bootstrap: {'fdr': 0.32, 'tpr': 0.85, 'fpr': 0.047058823529411764, 'shd': 10, 'nnz': 25}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.36666666666666664, 'tpr': 0.95, 'fpr': 0.06470588235294118, 'shd': 12, 'nnz': 30}
-Seed 5 - With bootstrap: {'fdr': 0.09523809523809523, 'tpr': 0.95, 'fpr': 0.011764705882352941, 'shd': 3, 'nnz': 21}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.37037037037037035, 'tpr': 0.85, 'fpr': 0.058823529411764705, 'shd': 10, 'nnz': 27}
-Seed 6 - With bootstrap: {'fdr': 0.15, 'tpr': 0.85, 'fpr': 0.01764705882352941, 'shd': 6, 'nnz': 20}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.40625, 'tpr': 0.95, 'fpr': 0.07647058823529412, 'shd': 14, 'nnz': 32}
-Seed 7 - With bootstrap: {'fdr': 0.2962962962962963, 'tpr': 0.95, 'fpr': 0.047058823529411764, 'shd': 9, 'nnz': 27}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.21739130434782608, 'tpr': 0.9, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 23}
-Seed 8 - With bootstrap: {'fdr': 0.09523809523809523, 'tpr': 0.95, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 21}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.34615384615384615, 'tpr': 0.85, 'fpr': 0.052941176470588235, 'shd': 10, 'nnz': 26}
-Seed 9 - With bootstrap: {'fdr': 0.2, 'tpr': 0.8, 'fpr': 0.023529411764705882, 'shd': 6, 'nnz': 20}
-Range 2 complete - results saved (Time taken: 0:11:15)
+Datasets loaded successfully!
+X (features): (7466, 11)
+Adjacency matrix: (11, 11)
 
-===== Weight Range 3 =====
-w_range_1: (-0.30000000000000004, -1.2), w_range_2: (0.30000000000000004, 1.2)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.13636363636363635, 'tpr': 0.95, 'fpr': 0.01764705882352941, 'shd': 4, 'nnz': 22}
-Seed 0 - With bootstrap: {'fdr': 0.05263157894736842, 'tpr': 0.9, 'fpr': 0.0058823529411764705, 'shd': 3, 'nnz': 19}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.4, 'tpr': 0.9, 'fpr': 0.07058823529411765, 'shd': 13, 'nnz': 30}
-Seed 1 - With bootstrap: {'fdr': 0.32142857142857145, 'tpr': 0.95, 'fpr': 0.052941176470588235, 'shd': 10, 'nnz': 28}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.4, 'tpr': 0.9, 'fpr': 0.07058823529411765, 'shd': 12, 'nnz': 30}
-Seed 2 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.20833333333333334, 'tpr': 0.95, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 24}
-Seed 3 - With bootstrap: {'fdr': 0.09523809523809523, 'tpr': 0.95, 'fpr': 0.011764705882352941, 'shd': 3, 'nnz': 21}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.36666666666666664, 'tpr': 0.95, 'fpr': 0.06470588235294118, 'shd': 12, 'nnz': 30}
-Seed 4 - With bootstrap: {'fdr': 0.2692307692307692, 'tpr': 0.95, 'fpr': 0.041176470588235294, 'shd': 8, 'nnz': 26}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.3103448275862069, 'tpr': 1.0, 'fpr': 0.052941176470588235, 'shd': 9, 'nnz': 29}
-Seed 5 - With bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.3076923076923077, 'tpr': 0.9, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 26}
-Seed 6 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 4, 'nnz': 25}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.3870967741935484, 'tpr': 0.95, 'fpr': 0.07058823529411765, 'shd': 12, 'nnz': 31}
-Seed 7 - With bootstrap: {'fdr': 0.2962962962962963, 'tpr': 0.95, 'fpr': 0.047058823529411764, 'shd': 9, 'nnz': 27}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.17391304347826086, 'tpr': 0.95, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 23}
-Seed 8 - With bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.32142857142857145, 'tpr': 0.95, 'fpr': 0.052941176470588235, 'shd': 9, 'nnz': 28}
-Seed 9 - With bootstrap: {'fdr': 0.17391304347826086, 'tpr': 0.95, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 23}
-Range 3 complete - results saved (Time taken: 0:12:19)
+starting Alg: NOTEARS
 
-===== Weight Range 4 =====
-w_range_1: (-0.4, -1.3), w_range_2: (0.4, 1.3)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.13636363636363635, 'tpr': 0.95, 'fpr': 0.01764705882352941, 'shd': 4, 'nnz': 22}
-Seed 0 - With bootstrap: {'fdr': 0.09523809523809523, 'tpr': 0.95, 'fpr': 0.011764705882352941, 'shd': 3, 'nnz': 21}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 1 - With bootstrap: {'fdr': 0.2962962962962963, 'tpr': 0.95, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 27}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.40625, 'tpr': 0.95, 'fpr': 0.07647058823529412, 'shd': 13, 'nnz': 32}
-Seed 2 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.24, 'tpr': 0.95, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 25}
-Seed 3 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.3448275862068966, 'tpr': 0.95, 'fpr': 0.058823529411764705, 'shd': 11, 'nnz': 29}
-Seed 4 - With bootstrap: {'fdr': 0.2692307692307692, 'tpr': 0.95, 'fpr': 0.041176470588235294, 'shd': 8, 'nnz': 26}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 5 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 2, 'nnz': 23}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.2692307692307692, 'tpr': 0.95, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 26}
-Seed 6 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.3448275862068966, 'tpr': 0.95, 'fpr': 0.058823529411764705, 'shd': 10, 'nnz': 29}
-Seed 7 - With bootstrap: {'fdr': 0.2692307692307692, 'tpr': 0.95, 'fpr': 0.041176470588235294, 'shd': 8, 'nnz': 26}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.17391304347826086, 'tpr': 0.95, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 23}
-Seed 8 - With bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.3793103448275862, 'tpr': 0.9, 'fpr': 0.06470588235294118, 'shd': 12, 'nnz': 29}
-Seed 9 - With bootstrap: {'fdr': 0.17391304347826086, 'tpr': 0.95, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 23}
-Range 4 complete - results saved (Time taken: 0:12:53)
-
-===== Weight Range 5 =====
-w_range_1: (-0.5, -1.4), w_range_2: (0.5, 1.4)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.13636363636363635, 'tpr': 0.95, 'fpr': 0.01764705882352941, 'shd': 4, 'nnz': 22}
-Seed 0 - With bootstrap: {'fdr': 0.09523809523809523, 'tpr': 0.95, 'fpr': 0.011764705882352941, 'shd': 3, 'nnz': 21}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 1 - With bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.3870967741935484, 'tpr': 0.95, 'fpr': 0.07058823529411765, 'shd': 12, 'nnz': 31}
-Seed 2 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Seed 3 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.3448275862068966, 'tpr': 0.95, 'fpr': 0.058823529411764705, 'shd': 11, 'nnz': 29}
-Seed 4 - With bootstrap: {'fdr': 0.17391304347826086, 'tpr': 0.95, 'fpr': 0.023529411764705882, 'shd': 5, 'nnz': 23}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 5 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 3, 'nnz': 24}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.2692307692307692, 'tpr': 0.95, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 26}
-Seed 6 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 7 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Seed 8 - With bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.4, 'tpr': 0.9, 'fpr': 0.07058823529411765, 'shd': 13, 'nnz': 30}
-Seed 9 - With bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Range 5 complete - results saved (Time taken: 0:14:02)
-
-===== Weight Range 6 =====
-w_range_1: (-0.6, -1.5), w_range_2: (0.6, 1.5)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 0 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.23076923076923078, 'tpr': 1.0, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 26}
-Seed 1 - With bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.3870967741935484, 'tpr': 0.95, 'fpr': 0.07058823529411765, 'shd': 12, 'nnz': 31}
-Seed 2 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Seed 3 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.3448275862068966, 'tpr': 0.95, 'fpr': 0.058823529411764705, 'shd': 11, 'nnz': 29}
-Seed 4 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 5 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 4, 'nnz': 25}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.24, 'tpr': 0.95, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 25}
-Seed 6 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 7 - With bootstrap: {'fdr': 0.23076923076923078, 'tpr': 1.0, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 26}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Seed 8 - With bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 9 - With bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Range 6 complete - results saved (Time taken: 0:15:06)
-
-===== Weight Range 7 =====
-w_range_1: (-0.7000000000000001, -1.6), w_range_2: (0.7000000000000001, 1.6)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.23076923076923078, 'tpr': 1.0, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 26}
-Seed 0 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 1 - With bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.3333333333333333, 'tpr': 1.0, 'fpr': 0.058823529411764705, 'shd': 10, 'nnz': 30}
-Seed 2 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Seed 3 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.32142857142857145, 'tpr': 0.95, 'fpr': 0.052941176470588235, 'shd': 10, 'nnz': 28}
-Seed 4 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 5 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.20833333333333334, 'tpr': 0.95, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 24}
-Seed 6 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 7 - With bootstrap: {'fdr': 0.23076923076923078, 'tpr': 1.0, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 26}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Seed 8 - With bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 9 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Range 7 complete - results saved (Time taken: 0:16:09)
-
-===== Weight Range 8 =====
-w_range_1: (-0.8, -1.7000000000000002), w_range_2: (0.8, 1.7000000000000002)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 0 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 1 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.3333333333333333, 'tpr': 1.0, 'fpr': 0.058823529411764705, 'shd': 10, 'nnz': 30}
-Seed 2 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Seed 3 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.32142857142857145, 'tpr': 0.95, 'fpr': 0.052941176470588235, 'shd': 10, 'nnz': 28}
-Seed 4 - With bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 5 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.20833333333333334, 'tpr': 0.95, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 24}
-Seed 6 - With bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 7 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Seed 8 - With bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 9 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Range 8 complete - results saved (Time taken: 0:17:00)
-
-===== Weight Range 9 =====
-w_range_1: (-0.9, -1.8), w_range_2: (0.9, 1.8)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 0 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 1 - With bootstrap: {'fdr': 0.23076923076923078, 'tpr': 1.0, 'fpr': 0.03529411764705882, 'shd': 5, 'nnz': 26}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 2 - With bootstrap: {'fdr': 0.23076923076923078, 'tpr': 1.0, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 26}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Seed 3 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.3333333333333333, 'tpr': 1.0, 'fpr': 0.058823529411764705, 'shd': 10, 'nnz': 30}
-Seed 4 - With bootstrap: {'fdr': 0.3103448275862069, 'tpr': 1.0, 'fpr': 0.052941176470588235, 'shd': 8, 'nnz': 29}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 5 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.17391304347826086, 'tpr': 0.95, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 23}
-Seed 6 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 7 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Seed 8 - With bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 9 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Range 9 complete - results saved (Time taken: 0:18:01)
-
-===== Weight Range 10 =====
-w_range_1: (-1.0, -1.9), w_range_2: (1.0, 1.9)
-Running seed 0
-Seed 0 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 0 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 1
-Seed 1 - No bootstrap: {'fdr': 0.25925925925925924, 'tpr': 1.0, 'fpr': 0.041176470588235294, 'shd': 7, 'nnz': 27}
-Seed 1 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 2
-Seed 2 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 2 - With bootstrap: {'fdr': 0.23076923076923078, 'tpr': 1.0, 'fpr': 0.03529411764705882, 'shd': 6, 'nnz': 26}
-Running seed 3
-Seed 3 - No bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Seed 3 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 4
-Seed 4 - No bootstrap: {'fdr': 0.3333333333333333, 'tpr': 1.0, 'fpr': 0.058823529411764705, 'shd': 10, 'nnz': 30}
-Seed 4 - With bootstrap: {'fdr': 0.3333333333333333, 'tpr': 1.0, 'fpr': 0.058823529411764705, 'shd': 9, 'nnz': 30}
-Running seed 5
-Seed 5 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 5 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Running seed 6
-Seed 6 - No bootstrap: {'fdr': 0.09090909090909091, 'tpr': 1.0, 'fpr': 0.011764705882352941, 'shd': 2, 'nnz': 22}
-Seed 6 - With bootstrap: {'fdr': 0.13043478260869565, 'tpr': 1.0, 'fpr': 0.01764705882352941, 'shd': 3, 'nnz': 23}
-Running seed 7
-Seed 7 - No bootstrap: {'fdr': 0.2857142857142857, 'tpr': 1.0, 'fpr': 0.047058823529411764, 'shd': 8, 'nnz': 28}
-Seed 7 - With bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Running seed 8
-Seed 8 - No bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Seed 8 - With bootstrap: {'fdr': 0.047619047619047616, 'tpr': 1.0, 'fpr': 0.0058823529411764705, 'shd': 1, 'nnz': 21}
-Running seed 9
-Seed 9 - No bootstrap: {'fdr': 0.2, 'tpr': 1.0, 'fpr': 0.029411764705882353, 'shd': 5, 'nnz': 25}
-Seed 9 - With bootstrap: {'fdr': 0.16666666666666666, 'tpr': 1.0, 'fpr': 0.023529411764705882, 'shd': 4, 'nnz': 24}
-Range 10 complete - results saved (Time taken: 0:19:18)
-
-Experiment complete!
-Total execution time: 2:26:06
-Summary files saved as 'summary_no_bootstrap.csv' and 'summary_with_bootstrap.csv'
-Detailed results saved by weight range
-Plots saved as individual metric files ('accuracy_metrics_*.png/pdf') and combined ('accuracy_metrics_comparison.png/pdf')
-Job completed at Mon Jun  2 01:24:06 PM CEST 2025
+Finished running Alg: NOTEARS
+[[ 0.          1.47949265  0.          0.          0.          0.
+   0.          0.6864003   0.          0.          0.        ]
+ [ 0.          0.          0.          0.          0.          0.
+   0.         -0.57704543  0.          0.          0.        ]
+ [ 0.19938017  0.          0.          1.56161249  0.          0.
+   0.         -0.43904917  0.          0.          0.        ]
+ [ 0.          0.          0.          0.          0.          0.
+   0.          0.          0.          0.          0.        ]
+ [ 0.          0.          0.45708394  0.81424725  0.          0.
+   0.          0.21550953  0.          0.          0.        ]
+ [-1.42961846 -0.21949741 -0.79640255  0.          0.          0.
+   1.94378766  4.67522277  0.25448435  0.         -0.41113307]
+ [ 0.71999159  0.13881229  0.61204608  0.          0.          0.
+   0.         -0.45342711  0.          0.          0.33140767]
+ [ 0.          0.          0.          0.          0.          0.
+   0.          0.          0.          0.          0.        ]
+ [ 0.          0.          0.          0.          0.          0.
+   0.13253567  1.34056947  0.          5.09339865  1.45674253]
+ [ 0.          0.          0.          0.          0.          0.
+   0.         -0.30781838  0.          0.          0.        ]
+ [ 0.          0.          0.14460959  0.          0.          0.
+   0.         -0.24633528  0.          0.          0.        ]]
+[[0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 1. 1. 0. 0. 0. 1. 0. 0. 0.]
+ [1. 1. 1. 0. 0. 0. 1. 1. 1. 0. 1.]
+ [1. 1. 1. 0. 0. 0. 0. 1. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 1. 0. 1. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0. 0. 1. 0. 0. 0.]]
+Accuracies W_Est continuous {'fdr': 0.8214285714285714, 'tpr': 0.2777777777777778, 'fpr': 0.6216216216216216, 'shd': 28, 'nnz': 28}
+Accuracies W_est_binary {'fdr': 0.8214285714285714, 'tpr': 0.2777777777777778, 'fpr': 0.6216216216216216, 'shd': 28, 'nnz': 28}
+Accuracies W_Est bootstrapped {'fdr': 0.8214285714285714, 'tpr': 0.2777777777777778, 'fpr': 0.6216216216216216, 'shd': 28, 'nnz': 28}
