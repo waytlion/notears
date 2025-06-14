@@ -141,18 +141,20 @@ def load_cyto_data():
 
 if __name__ == '__main__':
     start_time_total  = time.time()
-    
+    np.random.seed(0)
     bootstrap_samples = 50
+    n_rows = 50 
     w_threshold = 0.1
 
 
     ### Load the datasets
     X, B_true = load_cyto_data()
-    print(X.shape)
-    n_rows = int(X.shape[0])
+    print("Original dataset shape:", X.shape)
+    # Randomly sample 50 rows
+
     selected_rows = np.random.choice(X.shape[0], n_rows, replace=False)
     X = X[selected_rows, :]    
-    print(X.shape)
+    print("Sampled dataset shape:", X.shape)
     print(f"\nDatasets loaded successfully!")
     print(f"X (features): {X.shape}")
     print(f"Adjacency matrix: {B_true.shape}")
@@ -193,11 +195,10 @@ if __name__ == '__main__':
     W_stack = np.stack(W_est_bootstrapped)
     W_mean = np.mean(W_stack, axis=0)
     W_mean[np.abs(W_mean) < w_threshold] = 0
-    
-    # Evaluate bootstrapped model
+      # Evaluate bootstrapped model
     acc_with_bootstrap = utils.count_accuracy(B_true, W_mean != 0)
     print("Accuracies W_Est bootstrapped", acc_with_bootstrap)
-    np.savetxt("./acc_w_est-bootstrapped.csv", acc_with_bootstrap, delimiter=',')
+    np.savetxt("./w_est.csv", W_mean, delimiter=',')
 
     ### Total Time 
     total_time = time.time() - start_time_total
