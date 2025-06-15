@@ -142,7 +142,7 @@ def load_cyto_data():
 if __name__ == '__main__':    
     start_time_total  = time.time()
     np.random.seed(0)
-    bootstrap_samples = 50
+    bootstrap_samples = 30
     n_rows = 25
     w_threshold = 0.1
 
