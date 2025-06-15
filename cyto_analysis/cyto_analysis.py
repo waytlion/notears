@@ -139,12 +139,15 @@ def load_cyto_data():
     
     return X, adjacency_matrix
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     start_time_total  = time.time()
     np.random.seed(0)
     bootstrap_samples = 50
-    n_rows = 50 
+    n_rows = 25
     w_threshold = 0.1
+
+    # Create detailed_results folder
+    detailed_results_dir = 'detailed_results'
 
 
     ### Load the datasets
@@ -162,10 +165,7 @@ if __name__ == '__main__':
     ### Estimate dag (logistic error)
     print("\nstarting Alg: NOTEARS")
     W_est = notears_linear(X, lambda1=0.1, loss_type='l2')
-    print("\nFinished running Alg: NOTEARS")
-    print(W_est)
-    assert utils.is_dag(W_est)
-    np.savetxt("./w_est.csv", W_est, delimiter=',')
+    print("Finished running Alg: NOTEARS")    
 
     ### Accuracies: compare stat with true (compare with weights set to 1 and without set to 1)    # Calculate accuracies for continuous W_est
     acc_w_cont = utils.count_accuracy(B_true, W_est != 0)
@@ -173,17 +173,10 @@ if __name__ == '__main__':
     # Create binary version of W_est (set non-zero values to 1)
     W_est_binary = W_est.copy()
     W_est_binary[W_est_binary != 0] = 1
-    print(W_est_binary)
     
     # Calculate accuracies for binary W_est
     acc_w_binary = utils.count_accuracy(B_true, W_est_binary != 0)
 
-    print("Accuracies W_Est continuous", acc_w_cont)
-    np.savetxt("./acc_w_cont.csv", W_est, delimiter=',')
-    print("Accuracies W_est_binary", acc_w_binary)
-    np.savetxt("./W_est_binary.csv", W_est_binary, delimiter=',')
-
-    
     # Method 2: Bootstrap estimation
     W_est_bootstrapped = []
     for _ in range(bootstrap_samples):
@@ -195,12 +188,35 @@ if __name__ == '__main__':
     W_stack = np.stack(W_est_bootstrapped)
     W_mean = np.mean(W_stack, axis=0)
     W_mean[np.abs(W_mean) < w_threshold] = 0
-      # Evaluate bootstrapped model
+
+
+    # Evaluate bootstrapped model
     acc_with_bootstrap = utils.count_accuracy(B_true, W_mean != 0)
+
+    ### Print Weight Matrices
+    print(f"\n===== Estimated Weight Matrix continous values (W_est) =====")
+    print(W_est)
+    print(f"\n===== Estimated Weight Matrix Binary mapped values (W_est_binary) =====")
+    print(W_est_binary)
+    print(f"\n===== Estimated Weight Matrix Bootstrapped (W_est_bootstrapped) =====")
+    print(W_mean)
+    #Print Accuracies
+    print("Accuracies W_Est continuous", acc_w_cont)
+    print("Accuracies W_est_binary", acc_w_binary)
     print("Accuracies W_Est bootstrapped", acc_with_bootstrap)
-    np.savetxt("./w_est.csv", W_mean, delimiter=',')
+
+    # Save weight matrices
+    np.savetxt(os.path.join(detailed_results_dir, "W_est_binary.csv"), W_est_binary, delimiter=',')
+    np.savetxt(os.path.join(detailed_results_dir, "W_est_bootstrapped.csv"), W_mean, delimiter=',')
+    np.savetxt(os.path.join(detailed_results_dir, "W_est_continuous.csv"), W_est, delimiter=',')
+
+    # Save accuracies as CSV files
+    pd.DataFrame([acc_w_cont]).to_csv(os.path.join(detailed_results_dir, "accuracies_continuous.csv"), index=False)
+    pd.DataFrame([acc_w_binary]).to_csv(os.path.join(detailed_results_dir, "accuracies_binary.csv"), index=False)
+    pd.DataFrame([acc_with_bootstrap]).to_csv(os.path.join(detailed_results_dir, "accuracies_bootstrapped.csv"), index=False)
+
 
     ### Total Time 
     total_time = time.time() - start_time_total
     total_time_str = str(timedelta(seconds=int(total_time)))
-    print(total_time_str)
+    print(f"Total execution time: {total_time_str}")  
