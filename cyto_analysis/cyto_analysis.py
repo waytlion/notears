@@ -143,11 +143,10 @@ if __name__ == '__main__':
     start_time_total  = time.time()
     np.random.seed(0)
     bootstrap_samples = 30
-    n_rows = 25
-    w_threshold = 0.1
-
-    # Create detailed_results folder
+    n_rows = 10
+    w_threshold = 0.1    # Create detailed_results folder
     detailed_results_dir = 'detailed_results'
+    os.makedirs(detailed_results_dir, exist_ok=True)
 
 
     ### Load the datasets
