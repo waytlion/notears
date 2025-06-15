@@ -214,9 +214,7 @@ if __name__ == '__main__':
     pd.DataFrame([acc_w_cont]).to_csv(os.path.join(detailed_results_dir, "accuracies_continuous.csv"), index=False)
     pd.DataFrame([acc_w_binary]).to_csv(os.path.join(detailed_results_dir, "accuracies_binary.csv"), index=False)
     pd.DataFrame([acc_with_bootstrap]).to_csv(os.path.join(detailed_results_dir, "accuracies_bootstrapped.csv"), index=False)
-
-
     ### Total Time 
     total_time = time.time() - start_time_total
     total_time_str = str(timedelta(seconds=int(total_time)))
-    print(f"Total execution time: {total_time_str}")  
+    print(f"Total execution time: {total_time_str} (format: H:MM:SS)")  
