@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/sc.uni-leipzig.de/og98ohex/notears/notears/cyto_analysis/cyto_analysis.py", line 209, in <module>
+    np.savetxt(os.path.join(detailed_results_dir, "W_est_binary.csv"), W_est_binary, delimiter=',')
+  File "/home/sc.uni-leipzig.de/og98ohex/notears/notears/venv_notears/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 1563, in savetxt
+    open(fname, 'wt').close()
+    ^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'detailed_results/W_est_binary.csv'
